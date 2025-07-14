@@ -89,3 +89,70 @@ bool cmp(int a,int b){return a<b;}
 
 ## Struct
 
+sort函数：排序需指定对象
+
+bool cmp(stu a,stu b){return a.tl<b.tl;}   sort(tp,tp+n,cmp);
+
+简单示例
+~~~c++
+/*a simple example of struct
+explain:
+tp: people<60
+l:people>60
+*/
+#include <bits/stdc++.h>
+using namespace std;
+struct stu{
+	string name;
+	int y;
+	int m;
+};
+bool cmp(stu a,stu b){
+	if(a.y!=b.y)
+return a.y>b.y;
+else return a.y<b.y;}
+//compare data if eqal return the earlier one
+int main(){ 
+	stu tp[100],l[100];
+	int n=0,li=0;
+	cin>>n;//input amount of data
+	for(int i=0;i<n;i++){
+		cin>>tp[i].name>>tp[i].y;
+		// data input
+		if(tp[i].y>=60){
+			l[li]=tp[i];
+			tp[i].m=0;
+			li++;
+		}
+	}
+	sort(l,l+li,cmp);
+	
+
+	for(int i=0;i<li;i++){ 
+		cout<<l[i].name<<endl;
+}
+	for(int i=0;i<n;i++){ 
+	if(tp[i].m!=0)
+		cout<<tp[i].name<<endl;
+}
+//output format data
+	return 0;
+}
+~~~
+
+user:
+
+5
+q 12
+p 23
+w 66
+k 66
+b 67
+
+output:
+
+b
+w
+k
+q
+p
