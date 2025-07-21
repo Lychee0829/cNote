@@ -156,3 +156,164 @@ w
 k
 q
 p
+
+## 排序
+
+冒泡排序次数：n(n-1)/2
+
+示例
+
+~~~c++
+/*a pop-up sort simple example
+see also:https://www.luogu.com.cn/problem/P1116 */
+#include <bits/stdc++.h>
+using namespace std;
+const int maxn=10000; //max
+
+int main(){ 
+	int c[maxn],*p=c;
+	//pointer is used to input data
+	int n=0,cnt=0,cnti=0;//n:amount of data	
+	cin>>n;              //cnt:range counter
+	for(int i=0;i<n;i++){//cnti:sort counter
+		cin>>*p++;
+	}//get data
+	while(cnt<n-1){
+		for(int i=0;i<n-1-cnt;i++){ //pop-up
+			if(c[i]>c[i+1]){
+				swap(c[i],c[i+1]);
+				cnti++; 
+			}
+		}
+	cnt++;
+	}//sort data
+	cout<<cnti<<endl;
+	return 0;
+}
+~~~
+
+插入：先比较，后插入
+
+选择不稳定，其余稳定
+
+~~~c++
+#include <bits/stdc++.h>
+using namespace std;
+int main(){
+    long long m,n,cnt=0,cntg=0;
+    cin>>m>>n;
+    
+    for(long long x=0;x<=m;x++){
+        for(long long y=0;y<=n;y++){
+            long long tmp=min(n-y,x)+min(n-y,m-x)+min(x,y)+min(y,m-x);
+			cnt+=tmp;
+			cntg+=n*m-tmp; 
+        }
+    }
+    cout<<cnt/4<<' '<<cntg/4<<endl;
+    return 0;
+}
+
+~~~
+
+
+## 算法
+
+### 特点
+
+- 有限性
+
+- 确定性
+
+- 可行性
+
+- 输入输出 **可无输入**
+
+### 二分算法
+
+每次将数据分成两份，通过不断缩小查找范围实现高效查询，时间复杂度为O(log n)
+
+中间值=（最小值+最大值+1）/2
+
+~~~c++
+//核心
+while(L<=R){
+	mid=(L+R)>>2;
+	if(mid==num){
+		cout<<'1';
+		break;
+	}else if(mid>num){
+		R=mid-1;
+	}else L=mid++;
+}
+~~~
+
+### 前缀和算法
+
+前缀和计算L-R区间和
+
+s[R]-s[L-1]
+
+<mark>在下标为0时可用</mark>
+
+例：
+
+~~~c++
+/* 	a simple example of Prefix Sum
+	n:source
+	db:Prefix Sum 
+*/
+#include <bits/stdc++.h>
+using namespace std;
+int n[10000],db[10000]={0};
+
+int main(){ 	
+	int a=0,b=0,c=0,k=0; 
+	cin>>c;
+	for(int k=1;k<=c;k++){
+		cin>>n[k];
+		db[k]=db[k-1]+n[k];
+	}
+	cin>>a>>b;
+	cout<<db[b]-db[a]; 
+	return 0;
+}
+~~~
+
+### 时间复杂度
+
+只在乎量级，不在乎细节
+
+例：O(n^2^)
+
+###　贪心算法
+
+局部最优解推导出全局最优解
+
+tmp:
+
+~~~
+
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){ 
+	int q[3002],m,n,db[3002],s=0,t=1000;
+	cin>>n>>m;
+	for(int i=1;i<=n;i++){
+		cin>>q[i];
+		db[i]=db[i-1]+q[i];
+	}
+	for(int i=1;i<=n;i++)cout<<q[i]<<' ';
+	cout<<endl;
+	for(int i=m;i<=n;i++){
+	s=db[i];
+	if(s<t)t=s;
+	}
+	cout<<t<<endl;
+	
+	return 0;
+}
+~~~
+
+怕1614
