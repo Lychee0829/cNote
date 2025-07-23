@@ -1,3 +1,21 @@
+# 	妈了个逼
+
+# 这辈子都别碰scanf()
+
+# 这辈子都别碰scanf()
+
+# 这辈子都别碰scanf()
+
+## 重要事情说三遍,警示后人
+
+printf，高！					//指效率
+
+cin，硬！						//指异常安全
+
+cout，菜！					//指私人效率和煞笔参数
+
+scanf，又菜又废！	//煞笔参数强如大份，int类型输char可以原地爆炸的上古老飞舞
+
 [TOC]
 ## Define
 DEFINE type c=const char\*/char\*
@@ -157,7 +175,9 @@ k
 q
 p
 
-## 排序
+## 算法
+
+### 排序
 
 冒泡排序次数：n(n-1)/2
 
@@ -217,7 +237,6 @@ int main(){
 ~~~
 
 
-## 算法
 
 ### 特点
 
@@ -228,6 +247,12 @@ int main(){
 - 可行性
 
 - 输入输出 **可无输入**
+
+### 时间复杂度
+
+只在乎量级，不在乎细节
+
+例：O(n^2^)
 
 ### 二分算法
 
@@ -259,41 +284,6 @@ s[R]-s[L-1]
 例：
 
 ~~~c++
-/* 	a simple example of Prefix Sum
-	n:source
-	db:Prefix Sum 
-*/
-#include <bits/stdc++.h>
-using namespace std;
-int n[10000],db[10000]={0};
-
-int main(){ 	
-	int a=0,b=0,c=0,k=0; 
-	cin>>c;
-	for(int k=1;k<=c;k++){
-		cin>>n[k];
-		db[k]=db[k-1]+n[k];
-	}
-	cin>>a>>b;
-	cout<<db[b]-db[a]; 
-	return 0;
-}
-~~~
-
-### 时间复杂度
-
-只在乎量级，不在乎细节
-
-例：O(n^2^)
-
-###　贪心算法
-
-局部最优解推导出全局最优解
-
-tmp:
-
-~~~
-
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -316,4 +306,309 @@ int main(){
 }
 ~~~
 
-怕1614
+P1614
+
+~~~c++
+/* 	a simple example of Prefix Sum
+	n:source
+	db:Prefix Sum 
+*/
+#include <bits/stdc++.h>
+using namespace std;
+int n[10000],db[10000]={0};
+
+int main(){ 	
+	int a=0,b=0,c=0,k=0; 
+	cin>>c;
+	for(int k=1;k<=c;k++){
+		cin>>n[k];
+		db[k]=db[k-1]+n[k];
+	}
+	cin>>a>>b;
+	cout<<db[b]-db[a]; 
+	return 0;
+}
+~~~
+
+
+
+###　贪心算法
+
+局部最优解推导出全局最优解
+
+## 高精度数值运算
+
+### 高精加法
+
+~~~c++
+//传统派
+#include <bits/stdc++.h>
+using namespace std;
+#define max 500
+char a[max]={0},b[max]={0};
+int a1[max]={0},b1[max]={0},c1[max]={0};
+int main(){ 
+	scanf("%s",a);
+	scanf("%s",b);
+	long long la=strlen(a),lb=strlen(b);
+	for(long long i=0;i<la;i++){
+		a1[la-1-i]=a[i]-'0';	
+	}
+	for(long long i=0;i<lb;i++){
+		b1[lb-1-i]=b[i]-'0';
+	}
+	long long lc=la>lb?la:lb,x=0;
+	for(long long i=0;i<lc;i++){
+		c1[i]=a1[i]+b1[i]+x;
+		x=c1[i]/10;
+		c1[i]=c1[i]%10;
+	} 
+	if(x!=0){
+		c1[lc]=x;
+		lc++;
+	} 
+	for(long long i=lc-1;i>=0;i--){
+		printf("%d",c1[i]);
+	}
+	return 0;
+}
+~~~
+
+### 高精减法
+
+~~~c++
+//维新派
+#include <bits/stdc++.h>
+using namespace std;
+#define max 500
+string a,b;
+int a1[max]={0},b1[max]={0},c1[max]={0};
+int main(){ 
+	cin>>a;
+	cin>>b;
+	long long la=a.size(),lb=b.size();
+	int flag;
+	if(la<lb||la==lb&&a<b){
+		flag=1;
+		swap(la,lb);
+		swap(a,b);
+	}
+	for(long long i=0;i<la;i++){
+		a1[la-1-i]=a[i]-'0';	
+	}
+	for(long long i=0;i<lb;i++){
+		b1[lb-1-i]=b[i]-'0';
+	}
+	long long lc=la;
+	for(long long i=0;i<lc;i++){
+		if(a1[i]>=b1[i]) 
+			c1[i]=a1[i]-b1[i];
+		else {
+			a1[i+1]--;
+			a1[i]+=10;
+			c1[i]=a1[i]-b1[i];}
+	}  
+	long long k;
+	for(k=la;k>0;k--){
+		if(c1[k]!=0)break;
+	}
+	if(flag==1)printf("-");
+	for(long long i=k;i>=0;i--){
+		printf("%d",c1[i]);
+	}
+	return 0;
+}
+~~~
+
+#### 高精乐高超级拼装
+
+~~~c++
+//器官移植派
+#include <bits/stdc++.h>
+using namespace std;
+#define max 500
+string a,b;
+int q(string a){
+	#define max 500
+string b;
+int a1[max]={0},b1[max]={0},c1[max]={0};
+	cin>>b;
+	long long la=a.size(),lb=b.size();
+	for(long long i=0;i<la;i++){
+		a1[la-1-i]=a[i]-'0';	
+	}
+	for(long long i=0;i<lb;i++){
+		b1[lb-1-i]=b[i]-'0';
+	}
+	long long lc=la>lb?la:lb,x=0;
+	for(long long i=0;i<lc;i++){
+		c1[i]=a1[i]+b1[i]+x;
+		x=c1[i]/10;
+		c1[i]=c1[i]%10;
+	} 
+	if(x!=0){
+		c1[lc]=x;
+		lc++;
+	} 
+	for(long long i=lc-1;i>=0;i--){
+		printf("%d",c1[i]);
+	}
+
+}
+int a1[max]={0},b1[max]={0},c1[max]={0};
+string w;
+int main(){ 
+	cin>>a;
+	cin>>b;
+
+	long long la=a.size(),lb=b.size();
+	int flag;
+	if(la<lb||la==lb&&a<b){
+		flag=1;
+		swap(la,lb);
+		swap(a,b);
+	}
+	for(long long i=0;i<la;i++){
+		a1[la-1-i]=a[i]-'0';	
+	}
+	for(long long i=0;i<lb;i++){
+		b1[lb-1-i]=b[i]-'0';
+	}
+	long long lc=la;
+	for(long long i=0;i<lc;i++){
+		if(a1[i]>=b1[i]) 
+			c1[i]=a1[i]-b1[i];
+		else {
+			a1[i+1]--;
+			a1[i]+=10;
+			c1[i]=a1[i]-b1[i];}
+	}  
+	long long k,t=0;
+	for(k=la;k>0;k--){
+		if(c1[k]!=0)break;
+	}
+	if(flag==1)printf("-");
+	for(long long i=k;i>=0;i--){
+		w[t]=c1[i];
+		t++;
+	}
+	q(w);
+	
+	return 0;
+}
+~~~
+
+### 高精乘法
+
+~~~c++
+//抽风派
+#include <bits/stdc++.h>
+#define max 500
+char a[max]={0},b[max]={0};
+int a1[max]={0},b1[max]={0},c1[5001]={0};
+int main(){ 
+	scanf("%s",a);
+	scanf("%s",b);
+	long long la=strlen(a),lb=strlen(b);
+	for(long long i=0;i<la;i++){
+		a1[la-1-i]=a[i]-'0';	
+	}
+	for(long long i=0;i<lb;i++){
+		b1[lb-1-i]=b[i]-'0';
+	}
+	long long lc=la>lb?la:lb,x=0;
+	for(long long i=0;i<lb;i++){
+		for(long long j=0;j<la;j++){
+		c1[j+i]=c1[j+i]+a1[j]*b1[i]+x;
+		x=c1[j+i]/10;
+		c1[j+i]=c1[j+i]%10;
+	}
+	c1[i+la]=x;
+	x=0;
+	} 
+	
+	for(long long i=lc;i>=0;i--){
+		printf("%d",c1[i]);
+	}
+	return 0;
+}
+~~~
+
+
+
+## 栈
+
+~~~c++
+#include <bits/stdc++.h>
+using namespace std;
+#define max 500
+
+int a[max]={0},top=0;
+void push(int v){
+	if(top<max){
+		top++;
+		a[top]=v;
+	}
+}
+void pop(int k){
+	if(top>0){
+		top--;
+	}
+}
+int get_top(){
+	return a[top];
+}
+void clr(){
+	top=0;
+}
+int main(){ 
+	
+	return 0;
+}
+~~~
+
+~~~c++
+#include <bits/stdc++.h>
+using namespace std;
+#define max 500
+
+char a[max]={0},top=0,input[max],q=0;
+void push(int v){
+	if(top<max){
+		top++;
+		a[top]=v;
+	}
+}
+void pop(){
+	if(top>0){
+		top--;
+	}
+}
+char get_top(){
+	return a[top];
+}
+void clr(){
+	top=0;
+}
+int main(){ 
+int w=0;
+string s;
+cin>>s;
+w=s.size();
+	for(int i=0;i<w;i++){
+		if(s[i]!='@'){
+		if(s[i]=='(')
+		push(s[i]);
+		else if(get_top()=='(')pop();
+		else {
+			cout<<"NO";
+			return 0;
+		} }
+	}
+	if(top==0)cout<<"YES";
+	else cout<<"NO";
+	
+	return 0;
+}
+~~~
+
