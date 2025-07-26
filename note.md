@@ -612,3 +612,81 @@ w=s.size();
 }
 ~~~
 
+## 链表
+
+一部分用来存放数据节点，一部分用来存放指针
+
+可使用结构体实现
+
+串联
+
+~~~c++
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){ 
+	struct node{
+		int data;
+		node *next;
+	};
+	int t=0;
+	cin>>t;
+	node a={1,NULL};
+	node b={2,NULL};
+	node c={3,NULL};
+	node d={4,NULL};
+	node e={5,NULL};
+	a.next=&b;
+	b.next=&c;
+	c.next=&d;
+	d.next=&e;
+	node q={t,NULL};
+	q.next=&c;
+	b.next=&q;
+	node *p;
+	p=&a;
+	while(p!=NULL){
+		if(p->next->data==p){
+		f.next=p->next;
+		p->next=&f;
+		break;}
+		p=p->next;
+		
+	}
+	//cout<<p->data;
+	//	p=p->next ;
+	return 0;
+}
+~~~
+
+## 队列
+
+~~~c++
+#include <bits/stdc++.h>
+using namespace std;
+#define max 500
+
+int que[6],front=0,rear=0;
+void push(int n)
+if(rear<6){
+	que[rear++]=n;
+	return;
+}
+void pop(){
+	if(front!=rear)
+		front++;
+	return;
+}
+int size(){
+	return rear-front;
+}
+int getfront(){
+	return que[front];
+}
+int main(){ 
+	int a[max]={1,2,3},b[10]={4,5,6},c[3]={7,8,9},top=0;
+	
+	return 0;
+}
+~~~
+
